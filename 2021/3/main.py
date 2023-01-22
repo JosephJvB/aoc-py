@@ -5,43 +5,40 @@ def to_binary(l):
     b = 2 * b + n
   return b
 
+def get_ox_char(l, x):
+  rows = len(l)
+  half = rows / 2
+  zeros = 0
+  for y in range(rows):
+    v = l[y][x]
+    if v == '0':
+      zeros += 1
+
+  if zeros == half:
+    return '1'
+  if zeros < half:
+    return '1'
+  if zeros > half:
+    return '0'
+
 def part2():
   lines = [l.strip() for l in open('input.txt')]
-  rows = len(lines)
-  cols = len(lines[0])
-  half = rows / 2
 
+  oxlines = lines.copy()
+  co2lines = lines.copy()
+  oxpref = ''
+  co2pref = ''
+  for x in range(len(lines[0])):
+    # every loop must calculate next most common char for each remaining set
+    if len(oxlines) != 1:
+      oxpref += get_ox_char(oxlines, x)
+      oxlines = [l for l in oxlines if l.startswith(oxpref)]
+    if len(co2lines) != 1:
+      co2pref += '0' if get_ox_char(co2lines, x) == '1' else '1'
+      co2lines = [l for l in co2lines if l.startswith(co2pref)]
 
-  oxmatch = []
-  co2match = []
-  for x in range(cols):
-    zeros = 0
-    for y in range(rows):
-      v = lines[y][x]
-      if v == '0':
-        zeros += 1
-    if zeros == half:
-      oxmatch.append('1')
-      co2match.append('0')
-    if zeros < half:
-      oxmatch.append('1')
-      co2match.append('0')
-    if zeros > half:
-      oxmatch.append('0')
-      co2match.append('1')
-
-  oxmatches = lines.copy()
-  co2matches = lines.copy()
-  for x in range(cols):
-    _ox = ''.join(oxmatch[0:x])
-    _co2 = ''.join(co2match[0:x])
-    if len(oxmatches) != 1:
-      oxmatches = [l for l in oxmatches if l.startswith(_ox)]
-    if len(co2matches) != 1:
-      co2matches = [l for l in co2matches if l.startswith(_co2)]
-
-  lastox = oxmatches[0]
-  lastco2 = co2matches[0]
+  lastox = oxlines[0]
+  lastco2 = co2lines[0]
 
   print(lastox, lastco2)
   ox_bin = to_binary(int(c) for c in list(lastox))
@@ -49,9 +46,13 @@ def part2():
   print(ox_bin, co2_bin)
   print(ox_bin * co2_bin)
 
-  # 001100001000, 110011110011
+  # 001100001000 110011110011
   # 776 3315
   # 2572440 - too low
+
+  # 001100111001 110100101111
+  # 825 3375
+  # 2784375
 
 def part1():
   lines = [l.strip() for l in open('input.txt')]
