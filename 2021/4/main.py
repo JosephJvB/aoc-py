@@ -37,7 +37,10 @@ def part2():
     b = []
     for l in c.split('\n'):
       line = []
-      for n in l.strip().replace('  ', ' ').split(' '):
+      for n in l.split(' '): # better way to strip spaced numbers out of a line? idk
+        n = n.strip()
+        if n == '':
+          continue
         line.append(n)
       b.append(line)
     boards.append(b)
