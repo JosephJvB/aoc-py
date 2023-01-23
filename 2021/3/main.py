@@ -26,16 +26,14 @@ def part2():
 
   oxlines = lines.copy()
   co2lines = lines.copy()
-  oxpref = ''
-  co2pref = ''
   for x in range(len(lines[0])):
-    # every loop must calculate next most common char for each remaining set
+    # every loop must calculate next most common char@x for each remaining set
     if len(oxlines) != 1:
-      oxpref += get_ox_char(oxlines, x)
-      oxlines = [l for l in oxlines if l.startswith(oxpref)]
+      c = get_ox_char(oxlines, x)
+      oxlines = [l for l in oxlines if l[x] == c]
     if len(co2lines) != 1:
-      co2pref += '0' if get_ox_char(co2lines, x) == '1' else '1'
-      co2lines = [l for l in co2lines if l.startswith(co2pref)]
+      c = '0' if get_ox_char(co2lines, x) == '1' else '1'
+      co2lines = [l for l in co2lines if l[x] == c]
 
   lastox = oxlines[0]
   lastco2 = co2lines[0]
