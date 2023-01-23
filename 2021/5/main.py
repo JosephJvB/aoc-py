@@ -61,7 +61,7 @@ def part2():
       add_diag_vent(v, coords)
   overlap = [k for k in coords if coords[k] > 1]
   print('overlap', len(overlap))
-part2()
+# part2()
 
 def part1():
   vents = parse()
@@ -105,3 +105,4 @@ def part1():
     f.write('\n'.join([''.join(l) for l in grid]))
   overlap = [k for k in coords if coords[k] > 1]
   print('overlap', len(overlap))
+# part1()
