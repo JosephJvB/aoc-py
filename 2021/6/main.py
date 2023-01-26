@@ -17,13 +17,11 @@ def part2(fish):
     fish_list[f] += 1
   NUM_DAYS = 256
   for day in range(NUM_DAYS):
-    next_fish = [0 for i in range(9)]
     parents = fish_list[0] # day 0 fish will give birth
-    for i in range(9):
-      if i == 0:
-        next_fish[8] = parents # spawn new fish
-      else:
-        next_fish[i - 1] = fish_list[i]
+    next_fish = []
+    for i in range(1, 9):
+      next_fish.append(fish_list[i])
+    next_fish.append(parents)
     next_fish[6] += parents # add parents back to day 6
     fish_list = next_fish
   print(fish_list)
