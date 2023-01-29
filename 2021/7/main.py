@@ -1,13 +1,27 @@
+# read up some solutions after solving myself
+# learned that cost calc for part 2 is called triangular numbers
+# can get triangular numbers like this:
+import math
+def tri_nums(n):
+  return math.floor(n * (n + 1) / 2)
+
+
 memory = {}
+calcd = 0
+frommem = 0
 def calc_cost(n):
   extra = 0
   cost = 0
+  global frommem
+  global calcd
   if memory.get(n):
+    frommem += 1
     return memory[n]
   for x in range(n):
     cost += 1
     cost += extra
     extra += 1
+  calcd += 1
   memory[n] = cost
   return cost
 def part1():
@@ -43,3 +57,4 @@ def part2():
   print('cheapest x pos', cheapest, xpos)
 
 part2()
+print(calcd, frommem)
